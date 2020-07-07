@@ -1,7 +1,7 @@
 const graphql = require('graphql');
 const _ = require('lodash');
 
-const {GraphQLObjectType, GraphQLString, GraphQLSchema} = graphql;
+const {GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID} = graphql;
 
 //dummydata
 var content = [
@@ -13,7 +13,7 @@ var content = [
 const ContentType = new GraphQLObjectType({
 	name: 'Content',
 	fields:()=>({
-		id:{ type: GraphQLString},
+		id:{ type: GraphQLID},
 		heading:{type: GraphQLString}
 	})
 });
@@ -24,7 +24,7 @@ const RootQuery = new GraphQLObjectType({
 	fields:{
 		'content' : {
 			type:ContentType,
-			args: {id: { type:GraphQLString }},
+			args: {id: { type:GraphQLID }},
 			resolve(parent, args) {
 				//Code to get data from Database
 				return _.find(content,{id: args.id});
