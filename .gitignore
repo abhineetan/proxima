@@ -1,2 +1,8 @@
+#Backend
 /backend/node_modules
 /backend/package-lock.json
+
+
+#Frontend (client)
+/client/package-lock.json
+/client/node_modules
