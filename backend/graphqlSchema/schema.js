@@ -34,6 +34,7 @@ const ContentType = new GraphQLObjectType({
 	})
 });
 
+//Definition of Author Type
 const AuthorType = new GraphQLObjectType({
 	name: 'Author',
 	fields:()=>({
@@ -49,10 +50,11 @@ const AuthorType = new GraphQLObjectType({
 	})
 })
 
-
+//Root Query: Fetching of GraphQL starts from here
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQueryType',
 	fields:{
+		//Query to Return content on the basis of id
 		'content' : {
 			type:ContentType,
 			args: {id: { type:GraphQLID }},
@@ -61,13 +63,28 @@ const RootQuery = new GraphQLObjectType({
 				return _.find(content,{id: args.id});
 			}
 		},
+		//Query to Return authors of the content on the basis of id
 		'author' : {
 			type:AuthorType,
 			args: {id: {type: GraphQLID}},
 			resolve(parent, args) {
 				return _.find(authors,{id: args.id});
 			}
-		}
+		},
+		//Query to Return all the content
+		'contents' : {
+			type: new GraphQLList(ContentType),
+			resolve(parent, args) {
+				return content
+			}
+		},
+		//Query to Return all the author
+		'authors' : {
+			type: new GraphQLList(AuthorType),
+			resolve(parent, args) {
+				return authors
+			}
+		},		
 	}
 });
 
