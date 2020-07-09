@@ -5,7 +5,7 @@ const _ = require('lodash');
 const Content = require('../models/content.js');
 const Author = require('../models/author.js');
 
-const {GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList} = graphql;
+const {GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull} = graphql;
 
 const ContentType = new GraphQLObjectType({
 	name: 'Content',
@@ -78,14 +78,15 @@ const RootQuery = new GraphQLObjectType({
 });
 
 //Setting up Mutation for Performing CRUD operation in Mongo
+//GraphQLNonNull : Validation so that field cannot be empty
 const Mutation = new GraphQLObjectType({
 	name : 'Mutation',
 	fields: {
 		addAuthor : {
 			type: AuthorType,
 			args: {                            //Fields we require from Frontend
-				name : {type : GraphQLString},
-				age : {type : GraphQLInt}
+				name : {type : new GraphQLNonNull(GraphQLString)},
+				age : {type : new GraphQLNonNull(GraphQLInt)}
 			},
 			resolve(parent, args) {
 				let author = new Author({
@@ -99,9 +100,9 @@ const Mutation = new GraphQLObjectType({
 		addContent : {
 			type: ContentType,
 			args : {
-				heading : {type : GraphQLString},
-				article : {type : GraphQLString},
-				authorId : {type : GraphQLID}
+				heading : {type : new GraphQLNonNull(GraphQLString)},
+				article : {type : new GraphQLNonNull(GraphQLString)},
+				authorId : {type : new GraphQLNonNull(GraphQLID)}
 			},
 			resolve(parent, args) {
 				let content = new Content({
