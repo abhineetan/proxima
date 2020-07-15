@@ -26,5 +26,23 @@ mutation($heading: String!, $article: String!, $authorId: ID!) {
 	}
 }`
 
+const getArticleQuery = gql`
+	query($id:ID){
+		content(id:$id){
+			id
+			heading
+			author{
+				id
+				name
+				age
+				contents {
+					heading
+					id
+				}
+			}
+		}
+	}
+`
 
-export { getAuthorsQuery, getArticlesQuery, addArticleMutation };
+
+export { getAuthorsQuery, getArticlesQuery, addArticleMutation, getArticleQuery };

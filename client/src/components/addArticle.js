@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { graphql } from 'react-apollo';
 import { flowRight as compose } from 'lodash'
-import { getAuthorsQuery, addArticleMutation } from '../graphqlQueries/queries'
+import { getAuthorsQuery, addArticleMutation,getArticlesQuery } from '../graphqlQueries/queries'
 
 
 class AddArticle extends Component{
@@ -32,7 +32,8 @@ class AddArticle extends Component{
 				heading: this.state.heading,
 				article: this.state.content,
 				authorId: this.state.authorId
-			}
+			},
+			refetchQueries: [{query:getArticlesQuery}] 
 		});
 	}
 	render() {

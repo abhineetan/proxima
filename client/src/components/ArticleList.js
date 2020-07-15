@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import { graphql } from 'react-apollo';
 import { getArticlesQuery } from '../graphqlQueries/queries'
 
+
+//Components
+import ArticleDetails from './articleDetails';
+
 class ArticleList extends Component{
 	displayArticles(){
 		var data = this.props.data;
@@ -21,6 +25,7 @@ class ArticleList extends Component{
 				<ul id="article-list">
 					{this.displayArticles()}
 				</ul>
+				<ArticleDetails/>
 			</div>
 		);
 	}
