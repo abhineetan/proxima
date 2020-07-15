@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { graphql } from 'react-apollo';
-import { getAuthorsQuery } from '../graphqlQueries/queries'
+import { flowRight as compose } from 'lodash'
+import { getAuthorsQuery, addArticleMutation } from '../graphqlQueries/queries'
 
 
 class AddArticle extends Component{
@@ -13,37 +14,43 @@ class AddArticle extends Component{
 		}
 	}
 	displayAuthors() {
-		var data = this.props.data;
+		var data = this.props.getAuthorsQuery;
 		if(data.loading){
 			return <div> loading Articles </div>
-		}else {
+		} else {
 			return data.authors.map(author => {
 				return(
-					<option key={author.id} value={author.id}> {author.name} </option>
+					<option key={author.id} value={author.id}>{author.name}</option>
 				);
 			})
 		}
 	}
 	submitForm(e){
 		e.preventDefault();
-		console.log(this.state);
+		this.props.addArticleMutation({
+			variables: {
+				heading: this.state.heading,
+				article: this.state.content,
+				authorId: this.state.authorId
+			}
+		});
 	}
 	render() {
 		return (
 			<form id='add-article' onSubmit={this.submitForm.bind(this)}>
 				<div className="field">
 					<label>Heading</label>
-					<input type="text" onChange={ (e) => this.setState({heading : e.target.value})}/>
+					<input type="text" onChange={(e) => this.setState({heading : e.target.value})}/>
 				</div>
 
 				<div className="field">
 					<label>Content</label>
-					<input type="text" onChange={ (e) => this.setState({content : e.target.value})}/>
+					<input type="text" onChange={(e) => this.setState({content : e.target.value})}/>
 				</div>
 
 				<div className="field">
 					<label>Author</label>
-					<select onChange={ (e) => this.setState({authorId : e.target.value})}>
+					<select onChange={(e) => this.setState({authorId : e.target.value})}>
 						<option> Select Author </option>
 						{this.displayAuthors()}
 					</select>
@@ -55,4 +62,7 @@ class AddArticle extends Component{
 	}
 }
 
-export default graphql(getAuthorsQuery)(AddArticle);
+export default compose(
+	graphql(getAuthorsQuery, {name: "getAuthorsQuery"}),
+	graphql(addArticleMutation, {name: "addArticleMutation"})
+)(AddArticle);

@@ -1,5 +1,5 @@
 import { gql } from 'apollo-boost';
-import { graphql } from 'react-apollo';
+//import { graphql } from 'react-apollo';
 
 const getAuthorsQuery = gql`
 {
@@ -18,5 +18,13 @@ const getArticlesQuery = gql`
 	}
 }`
 
+const addArticleMutation = gql`
+mutation($heading: String!, $article: String!, $authorId: ID!) {
+	addContent(heading:$heading, article:$article, authorId:$authorId){
+		heading
+		id
+	}
+}`
 
-export { getAuthorsQuery, getArticlesQuery };
+
+export { getAuthorsQuery, getArticlesQuery, addArticleMutation };
