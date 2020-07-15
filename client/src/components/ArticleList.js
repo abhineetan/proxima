@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
-import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
-
-const getArticlesQuery = gql`
-{
-	contents {
-		id
-		heading
-	}
-}`
+import { getArticlesQuery } from '../graphqlQueries/queries'
 
 class ArticleList extends Component{
 	displayArticles(){
