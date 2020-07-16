@@ -57,7 +57,7 @@ class AddArticle extends Component{
 					</select>
 				</div>
 
-				<button>*</button>
+				<button>+</button>
 			</form>
 		);
 	}
