@@ -26,18 +26,6 @@ mutation($heading: String!, $article: String!, $authorId: ID!) {
 	}
 }`
 
-/*
-{
-  content(id : "5f077c624a8926814e45470b") {
-    heading
-    article
-    author{
-      name
-    }
-  }
-}
-*/
-
 const getArticleQuery = gql`
 	query($id:ID){
 		content(id:$id){
