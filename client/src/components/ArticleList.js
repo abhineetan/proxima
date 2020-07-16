@@ -4,6 +4,7 @@ import { getArticlesQuery } from '../graphqlQueries/queries'
 
 
 //Components
+//console.log('here',data);
 import ArticleDetails from './articleDetails';
 
 class ArticleList extends Component{
@@ -18,9 +19,10 @@ class ArticleList extends Component{
 		if(data.loading){
 			return <div> loading Articles </div>
 		} else {
-			return data.contents.map(article => {
+			
+			return data.contents.map(content => {
 				return(
-					<li key={article.id} onClick={(e) =>{this.setState({selected : article.id})}}> {article.heading} </li>
+					<li key={content.id} onClick={(e) => {this.setState({selected : content.id})}}> {content.heading} </li>
 				);
 			})
 		}
@@ -31,7 +33,7 @@ class ArticleList extends Component{
 				<ul id="article-list">
 					{this.displayArticles()}
 				</ul>
-				<ArticleDetails articleId={this.state.selected}/>
+				<ArticleDetails contentId={this.state.selected}/>
 			</div>
 		);
 	}
